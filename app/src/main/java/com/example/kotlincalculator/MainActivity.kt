@@ -17,17 +17,25 @@ class MainActivity : AppCompatActivity() {
 
         binding.resultButton.setOnClickListener {
 
-            val number1Int = binding.number1.text.trim().toString()
-            val number2Int = binding.number2.text.trim().toString()
-            if (number1Int.isBlank()) {
+            val number1Double = binding.number1.text.trim().toString()
+            val number2Double = binding.number2.text.trim().toString()
+            if (number1Double.isBlank() || number1Double == ".") {
                 binding.number1.error = "Skriv et tal"
             }
-            if (number2Int.isBlank()) {
+            if (number2Double.isBlank() || number2Double == ".") {
                 binding.number2.error = "Skriv et tal"
             }
-            val number1 = number1Int.toIntOrNull()?: 0
-            val number2 = number2Int.toIntOrNull()?: 0
-            val numberResult = number1 + number2
+            val number1 = number1Double.toDoubleOrNull()?: 0.0
+            val number2 = number2Double.toDoubleOrNull()?: 0.0
+            val operation = binding.spinner.selectedItem
+            val numberResult = when (operation) {
+                "+" -> number1 + number2
+                "-" -> number1 - number2
+                "/" -> number1 / number2
+                "*" -> number1 * number2
+                else -> Double.NaN
+            }
+            //val numberResult = number1 + number2
             binding.result.text = numberResult.toString()
         }
     }
